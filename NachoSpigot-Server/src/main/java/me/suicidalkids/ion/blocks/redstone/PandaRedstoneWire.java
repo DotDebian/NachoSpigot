@@ -2,6 +2,7 @@ package me.suicidalkids.ion.blocks.redstone;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+import net.jafama.FastMath;
 import net.minecraft.server.*;
 import org.apache.commons.lang3.ArrayUtils;
 import org.bukkit.event.block.BlockRedstoneEvent;
@@ -120,7 +121,7 @@ public class PandaRedstoneWire extends BlockRedstoneWire {
             int wirePower = getSurroundingWirePower(worldIn, pos);
             // Lower the strength as it moved a block
             --wirePower;
-            int newPower = Math.max(blockPower, wirePower);
+            int newPower = FastMath.max(blockPower, wirePower);
 
             // Power lowered?
             if (newPower < oldPower) {
@@ -149,7 +150,7 @@ public class PandaRedstoneWire extends BlockRedstoneWire {
             int wirePower = getSurroundingWirePower(worldIn, pos);
             // Lower the strength as it moved a block
             wirePower--;
-            int newPower = Math.max(blockPower, wirePower);
+            int newPower = FastMath.max(blockPower, wirePower);
 
             if (oldPower != newPower) {
                 BlockRedstoneEvent event = new BlockRedstoneEvent(
@@ -432,7 +433,7 @@ public class PandaRedstoneWire extends BlockRedstoneWire {
             return power;
         }
         int j = state.get(BlockRedstoneWire.POWER);
-        return Math.max(j, power);
+        return FastMath.max(j, power);
     }
 
     public int a(IBlockAccess iblockaccess, BlockPosition blockposition, IBlockData iblockdata, EnumDirection enumdirection) {

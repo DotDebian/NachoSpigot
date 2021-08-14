@@ -5,6 +5,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import me.suicidalkids.ion.movement.MovementCache;
+import net.jafama.FastMath;
 import org.bukkit.Bukkit;
 import org.bukkit.block.BlockState;
 import org.bukkit.craftbukkit.CraftServer;
@@ -1381,7 +1382,7 @@ public abstract class World implements IBlockAccess {
         IBlockData block = Blocks.STONE.getBlockData();
 
         // Spigot start
-        int ystart = Math.max((k - 1), 0);
+        int ystart = FastMath.max((k - 1), 0);
         for ( int chunkx = ( i >> 4 ); chunkx <= ( ( j - 1 ) >> 4 ); chunkx++ )
         {
             int cx = chunkx << 4;
@@ -1403,10 +1404,10 @@ public abstract class World implements IBlockAccess {
                 boolean collidesWithSign = entity.world.paperSpigotConfig.fallingBlocksCollideWithSigns && (entity instanceof EntityTNTPrimed || entity instanceof EntityFallingBlock);
                 int cz = chunkz << 4;
                 // Compute ranges within chunk
-                int xstart = Math.max(i, cx);
-                int xend = Math.min(j, (cx + 16));
-                int zstart = Math.max(i1, cz);
-                int zend = Math.min(j1, (cz + 16));
+                int xstart = FastMath.max(i, cx);
+                int xend = FastMath.min(j, (cx + 16));
+                int zstart = FastMath.max(i1, cz);
+                int zend = FastMath.min(j1, (cz + 16));
                 // Loop through blocks within chunk
                 for ( int x = xstart; x < xend; x++ )
                 {
@@ -2147,8 +2148,8 @@ public abstract class World implements IBlockAccess {
         double d0 = 1.0D / ((axisalignedbb.d - axisalignedbb.a) * 2.0D + 1.0D);
         double d1 = 1.0D / ((axisalignedbb.e - axisalignedbb.b) * 2.0D + 1.0D);
         double d2 = 1.0D / ((axisalignedbb.f - axisalignedbb.c) * 2.0D + 1.0D);
-        double d3 = (1.0D - Math.floor(1.0D / d0) * d0) / 2.0D;
-        double d4 = (1.0D - Math.floor(1.0D / d2) * d2) / 2.0D;
+        double d3 = (1.0D - FastMath.floor(1.0D / d0) * d0) / 2.0D;
+        double d4 = (1.0D - FastMath.floor(1.0D / d2) * d2) / 2.0D;
 
         if (d0 >= 0.0D && d1 >= 0.0D && d2 >= 0.0D) {
             int i = 0;
@@ -2431,12 +2432,12 @@ public abstract class World implements IBlockAccess {
         // Quick conditions to allow us to exist early
         if ( optimalChunks > 0  ) {
         // Keep chunks with growth inside of the optimal chunk range
-        int chunksPerPlayer = Math.min( 200, Math.max( 1, (int) ( ( ( optimalChunks - players.size() ) / (double) players.size() ) + 0.5 ) ) );
+        int chunksPerPlayer = FastMath.min( 200, FastMath.max( 1, (int) ( ( ( optimalChunks - players.size() ) / (double) players.size() ) + 0.5 ) ) );
         int randRange = 3 + chunksPerPlayer / 30;
         // Limit to normal tick radius - including view distance
         randRange = ( randRange > chunkTickRadius ) ? chunkTickRadius : randRange;
         // odds of growth happening vs growth happening in vanilla
-        this.growthOdds = this.modifiedOdds = Math.max( 35, Math.min( 100, ( ( chunksPerPlayer + 1 ) * 100F ) / 15F ) );
+        this.growthOdds = this.modifiedOdds = FastMath.max( 35, FastMath.min( 100, ( ( chunksPerPlayer + 1 ) * 100F ) / 15F ) );
         // Spigot end
         for (i = 0; i < this.players.size(); ++i) {
             entityhuman = (EntityHuman) this.players.get(i);
@@ -2446,7 +2447,7 @@ public abstract class World implements IBlockAccess {
 
             // Spigot start - Always update the chunk the player is on
             long key = chunkToKey( j, k );
-            int existingPlayers = Math.max( 0, chunkTickList.get( key ) ); // filter out -1
+            int existingPlayers = FastMath.max( 0, chunkTickList.get( key ) ); // filter out -1
             chunkTickList.put( key, (short) ( existingPlayers + 1 ) );
 
             // Check and see if we update the chunks surrounding the player this tick
@@ -2714,7 +2715,7 @@ public abstract class World implements IBlockAccess {
                                     int i5 = k2 + enumdirection.getAdjacentZ();
 
                                     blockposition_mutableblockposition.c(k4, l4, i5);
-                                    int j5 = Math.max(1, this.getType(blockposition_mutableblockposition).getBlock().p());
+                                    int j5 = FastMath.max(1, this.getType(blockposition_mutableblockposition).getBlock().p());
 
                                     l2 = this.b(enumskyblock, (BlockPosition) blockposition_mutableblockposition);
                                     if (l2 == l3 - j5 && j < this.H.length) {
@@ -2744,9 +2745,9 @@ public abstract class World implements IBlockAccess {
                 if (l2 != k5) {
                     this.a(enumskyblock, blockposition2, l2);
                     if (l2 > k5) {
-                        i3 = Math.abs(i2 - i1);
-                        j3 = Math.abs(j2 - j1);
-                        k3 = Math.abs(k2 - k1);
+                        i3 = FastMath.abs(i2 - i1);
+                        j3 = FastMath.abs(j2 - j1);
+                        k3 = FastMath.abs(k2 - k1);
                         boolean flag = j < this.H.length - 6;
 
                         if (i3 + j3 + k3 < 17 && flag) {
@@ -3072,28 +3073,28 @@ public abstract class World implements IBlockAccess {
 
     public int getBlockPower(BlockPosition blockposition) {
         byte b0 = 0;
-        int i = Math.max(b0, this.getBlockPower(blockposition.down(), EnumDirection.DOWN));
+        int i = FastMath.max(b0, this.getBlockPower(blockposition.down(), EnumDirection.DOWN));
 
         if (i >= 15) {
             return i;
         } else {
-            i = Math.max(i, this.getBlockPower(blockposition.up(), EnumDirection.UP));
+            i = FastMath.max(i, this.getBlockPower(blockposition.up(), EnumDirection.UP));
             if (i >= 15) {
                 return i;
             } else {
-                i = Math.max(i, this.getBlockPower(blockposition.north(), EnumDirection.NORTH));
+                i = FastMath.max(i, this.getBlockPower(blockposition.north(), EnumDirection.NORTH));
                 if (i >= 15) {
                     return i;
                 } else {
-                    i = Math.max(i, this.getBlockPower(blockposition.south(), EnumDirection.SOUTH));
+                    i = FastMath.max(i, this.getBlockPower(blockposition.south(), EnumDirection.SOUTH));
                     if (i >= 15) {
                         return i;
                     } else {
-                        i = Math.max(i, this.getBlockPower(blockposition.west(), EnumDirection.WEST));
+                        i = FastMath.max(i, this.getBlockPower(blockposition.west(), EnumDirection.WEST));
                         if (i >= 15) {
                             return i;
                         } else {
-                            i = Math.max(i, this.getBlockPower(blockposition.east(), EnumDirection.EAST));
+                            i = FastMath.max(i, this.getBlockPower(blockposition.east(), EnumDirection.EAST));
                             return i >= 15 ? i : i;
                         }
                     }

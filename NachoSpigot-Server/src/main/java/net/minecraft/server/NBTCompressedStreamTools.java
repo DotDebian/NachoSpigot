@@ -1,5 +1,8 @@
 package net.minecraft.server;
 
+import com.linkedin.migz.MiGzInputStream;
+import com.linkedin.migz.MiGzOutputStream;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.DataInput;
@@ -15,7 +18,7 @@ import java.util.zip.GZIPOutputStream;
 public class NBTCompressedStreamTools {
 
     public static NBTTagCompound a(InputStream inputstream) throws IOException {
-        DataInputStream datainputstream = new DataInputStream(new BufferedInputStream(new GZIPInputStream(inputstream)));
+        DataInputStream datainputstream = new DataInputStream(new BufferedInputStream(new MiGzInputStream(inputstream)));
 
         NBTTagCompound nbttagcompound;
 
@@ -29,7 +32,7 @@ public class NBTCompressedStreamTools {
     }
 
     public static void a(NBTTagCompound nbttagcompound, OutputStream outputstream) throws IOException {
-        DataOutputStream dataoutputstream = new DataOutputStream(new BufferedOutputStream(new GZIPOutputStream(outputstream)));
+        DataOutputStream dataoutputstream = new DataOutputStream(new BufferedOutputStream(new MiGzOutputStream(outputstream)));
 
         try {
             a(nbttagcompound, (DataOutput) dataoutputstream);

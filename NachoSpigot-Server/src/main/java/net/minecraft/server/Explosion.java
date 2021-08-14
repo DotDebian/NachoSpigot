@@ -9,6 +9,7 @@ import java.util.concurrent.CompletableFuture;
 // CraftBukkit start
 import dev.cobblesword.nachospigot.Nacho;
 import dev.cobblesword.nachospigot.commons.Constants;
+import net.jafama.FastMath;
 import org.bukkit.craftbukkit.event.CraftEventFactory;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.Location;
@@ -35,7 +36,7 @@ public class Explosion {
     public Explosion(World world, Entity entity, double d0, double d1, double d2, float f, boolean flag, boolean flag1) {
         this.world = world;
         this.source = entity;
-        this.size = (float) Math.max(f, 0.0); // CraftBukkit - clamp bad values
+        this.size = (float) FastMath.max(f, 0.0); // CraftBukkit - clamp bad values
         this.posX = d0;
         this.posY = d1;
         this.posZ = d2;
@@ -328,7 +329,7 @@ public class Explosion {
                         double d0 = (float) k / 15.0F * 2.0F - 1.0F;
                         double d1 = (float) i / 15.0F * 2.0F - 1.0F;
                         double d2 = (float) j / 15.0F * 2.0F - 1.0F;
-                        double d3 = Math.sqrt(d0 * d0 + d1 * d1 + d2 * d2);
+                        double d3 = FastMath.sqrt(d0 * d0 + d1 * d1 + d2 * d2);
 
                         d0 = (d0 / d3) * 0.30000001192092896D;
                         d1 = (d1 / d3) * 0.30000001192092896D;
@@ -442,8 +443,8 @@ public class Explosion {
         double d0 = 1.0D / ((aabb.d - aabb.a) * 2.0D + 1.0D);
         double d1 = 1.0D / ((aabb.e - aabb.b) * 2.0D + 1.0D);
         double d2 = 1.0D / ((aabb.f - aabb.c) * 2.0D + 1.0D);
-        double d3 = (1.0D - Math.floor(1.0D / d0) * d0) / 2.0D;
-        double d4 = (1.0D - Math.floor(1.0D / d2) * d2) / 2.0D;
+        double d3 = (1.0D - FastMath.floor(1.0D / d0) * d0) / 2.0D;
+        double d4 = (1.0D - FastMath.floor(1.0D / d2) * d2) / 2.0D;
 
         if (d0 < 0.0 || d1 < 0.0 || d2 < 0.0) {
             return Collections.emptyList();

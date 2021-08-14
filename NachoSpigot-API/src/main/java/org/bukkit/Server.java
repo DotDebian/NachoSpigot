@@ -3,13 +3,7 @@ package org.bukkit;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.Serializable;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.logging.Logger;
 
 import org.bukkit.Warning.WarningState;
@@ -1030,6 +1024,13 @@ public interface Server extends PluginMessageRecipient {
             throw new UnsupportedOperationException( "Not supported yet." );
         }
         // PaperSpigot end
+
+        // CastelysSpigot start - Add getTPS method
+        public List<Double> getTPSOverTime(int secondsDuration)
+        {
+            throw new UnsupportedOperationException( "Not supported yet." );
+        }
+        // CastelysSpigot end
     }
 
     Spigot spigot();

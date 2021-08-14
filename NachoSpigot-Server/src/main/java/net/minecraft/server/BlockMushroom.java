@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.Random;
 
 // CraftBukkit start
+import net.jafama.FastMath;
 import org.bukkit.TreeType;
 import org.bukkit.block.BlockState;
 import org.bukkit.event.block.BlockSpreadEvent;
@@ -20,7 +21,7 @@ public class BlockMushroom extends BlockPlant implements IBlockFragilePlantEleme
 
     public void b(World world, BlockPosition blockposition, IBlockData iblockdata, Random random) {
         final int sourceX = blockposition.getX(), sourceY = blockposition.getY(), sourceZ = blockposition.getZ(); // CraftBukkit
-        if (random.nextInt(Math.max(1, (int) world.growthOdds / world.spigotConfig.mushroomModifier * 25)) == 0) { // Spigot            int i = 5;
+        if (random.nextInt(FastMath.max(1, (int) world.growthOdds / world.spigotConfig.mushroomModifier * 25)) == 0) { // Spigot            int i = 5;
             int i = 5;
             boolean flag = true;
             Iterator iterator = BlockPosition.b(blockposition.a(-4, -1, -4), blockposition.a(4, 1, 4)).iterator();

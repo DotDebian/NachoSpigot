@@ -10,6 +10,7 @@ import java.util.UUID;
 
 // CraftBukkit start
 import dev.cobblesword.nachospigot.Nacho;
+import net.jafama.FastMath;
 import org.bukkit.craftbukkit.entity.CraftHumanEntity;
 import org.bukkit.craftbukkit.entity.CraftItem;
 import org.bukkit.craftbukkit.inventory.CraftItemStack;
@@ -266,7 +267,7 @@ public abstract class EntityHuman extends EntityLiving {
 
         if (itemstack.m() == EnumAnimation.EAT) {
             for (int j = 0; j < i; ++j) {
-                Vec3D vec3d = new Vec3D(((double) this.random.nextFloat() - 0.5D) * 0.1D, Math.random() * 0.1D + 0.1D, 0.0D);
+                Vec3D vec3d = new Vec3D(((double) this.random.nextFloat() - 0.5D) * 0.1D, FastMath.random() * 0.1D + 0.1D, 0.0D);
 
                 vec3d = vec3d.a(-this.pitch * 3.1415927F / 180.0F);
                 vec3d = vec3d.b(-this.yaw * 3.1415927F / 180.0F);
@@ -406,7 +407,7 @@ public abstract class EntityHuman extends EntityLiving {
 
         this.k((float) attributeinstance.getValue());
         float f = MathHelper.sqrt(this.motX * this.motX + this.motZ * this.motZ);
-        float f1 = (float) ( org.bukkit.craftbukkit.TrigMath.atan(-this.motY * 0.20000000298023224D) * 15.0D); // CraftBukkit
+        float f1 = (float) ( FastMath.atan(-this.motY * 0.20000000298023224D) * 15.0D); // CraftBukkit
 
         if (f > 0.1F) {
             f = 0.1F;
@@ -590,9 +591,9 @@ public abstract class EntityHuman extends EntityLiving {
                 entityitem.motY = (double) (-MathHelper.sin(this.pitch / 180.0F * 3.1415927F) * f + 0.1F);
                 f1 = this.random.nextFloat() * 3.1415927F * 2.0F;
                 f = 0.02F * this.random.nextFloat();
-                entityitem.motX += Math.cos((double) f1) * (double) f;
+                entityitem.motX += FastMath.cos((double) f1) * (double) f;
                 entityitem.motY += (double) ((this.random.nextFloat() - this.random.nextFloat()) * 0.1F);
-                entityitem.motZ += Math.sin((double) f1) * (double) f;
+                entityitem.motZ += FastMath.sin((double) f1) * (double) f;
             }
 
             // CraftBukkit start - fire PlayerDropItemEvent
@@ -878,7 +879,7 @@ public abstract class EntityHuman extends EntityLiving {
             f = this.applyMagicModifier(damagesource, f);
             float f1 = f;
 
-            f = Math.max(f - this.getAbsorptionHearts(), 0.0F);
+            f = FastMath.max(f - this.getAbsorptionHearts(), 0.0F);
             this.setAbsorptionHearts(this.getAbsorptionHearts() - (f1 - f));
             if (f != 0.0F) {
                 this.applyExhaustion(damagesource.getExhaustionCost());
@@ -887,7 +888,7 @@ public abstract class EntityHuman extends EntityLiving {
                 this.setHealth(this.getHealth() - f);
                 this.bs().a(damagesource, f2, f);
                 if (f < 3.4028235E37F) {
-                    this.a(StatisticList.x, Math.round(f * 10.0F));
+                    this.a(StatisticList.x, FastMath.round(f * 10.0F));
                 }
 
             }
@@ -1081,7 +1082,7 @@ public abstract class EntityHuman extends EntityLiving {
                         }
 
                         if (entity instanceof EntityLiving) {
-                            this.a(StatisticList.w, Math.round(f * 10.0F));
+                            this.a(StatisticList.w, FastMath.round(f * 10.0F));
                             if (j > 0) {
                                 // CraftBukkit start - Call a combust event when somebody hits with a fire enchanted item
                                 EntityCombustByEntityEvent combustEvent = new EntityCombustByEntityEvent(this.getBukkitEntity(), entity.getBukkitEntity(), j * 4);
@@ -1139,7 +1140,7 @@ public abstract class EntityHuman extends EntityLiving {
                 return EntityHuman.EnumBedResult.NOT_POSSIBLE_NOW;
             }
 
-            if (Math.abs(this.locX - (double) blockposition.getX()) > 3.0D || Math.abs(this.locY - (double) blockposition.getY()) > 2.0D || Math.abs(this.locZ - (double) blockposition.getZ()) > 3.0D) {
+            if (FastMath.abs(this.locX - (double) blockposition.getX()) > 3.0D || FastMath.abs(this.locY - (double) blockposition.getY()) > 2.0D || FastMath.abs(this.locZ - (double) blockposition.getZ()) > 3.0D) {
                 return EntityHuman.EnumBedResult.TOO_FAR_AWAY;
             }
 
@@ -1387,23 +1388,23 @@ public abstract class EntityHuman extends EntityLiving {
             int i;
 
             if (this.a(Material.WATER)) {
-                i = Math.round(MathHelper.sqrt(d0 * d0 + d1 * d1 + d2 * d2) * 100.0F);
+                i = FastMath.round(MathHelper.sqrt(d0 * d0 + d1 * d1 + d2 * d2) * 100.0F);
                 if (i > 0) {
                     this.a(StatisticList.p, i);
                     this.applyExhaustion(world.paperSpigotConfig.playerSwimmingExhaustion * (float) i * 0.01F); // PaperSpigot - Configurable swimming exhaustion
                 }
             } else if (this.V()) {
-                i = Math.round(MathHelper.sqrt(d0 * d0 + d2 * d2) * 100.0F);
+                i = FastMath.round(MathHelper.sqrt(d0 * d0 + d2 * d2) * 100.0F);
                 if (i > 0) {
                     this.a(StatisticList.l, i);
                     this.applyExhaustion(world.paperSpigotConfig.playerSwimmingExhaustion * (float) i * 0.01F); // PaperSpigot - Configurable swimming (diving) exhaustion
                 }
             } else if (this.k_()) {
                 if (d1 > 0.0D) {
-                    this.a(StatisticList.n, (int) Math.round(d1 * 100.0D));
+                    this.a(StatisticList.n, (int) FastMath.round(d1 * 100.0D));
                 }
             } else if (this.onGround) {
-                i = Math.round(MathHelper.sqrt(d0 * d0 + d2 * d2) * 100.0F);
+                i = FastMath.round(MathHelper.sqrt(d0 * d0 + d2 * d2) * 100.0F);
                 if (i > 0) {
                     this.a(StatisticList.i, i);
                     if (this.isSprinting()) {
@@ -1418,7 +1419,7 @@ public abstract class EntityHuman extends EntityLiving {
                     }
                 }
             } else {
-                i = Math.round(MathHelper.sqrt(d0 * d0 + d2 * d2) * 100.0F);
+                i = FastMath.round(MathHelper.sqrt(d0 * d0 + d2 * d2) * 100.0F);
                 if (i > 25) {
                     this.a(StatisticList.o, i);
                 }
@@ -1429,7 +1430,7 @@ public abstract class EntityHuman extends EntityLiving {
 
     private void l(double d0, double d1, double d2) {
         if (this.vehicle != null) {
-            int i = Math.round(MathHelper.sqrt(d0 * d0 + d1 * d1 + d2 * d2) * 100.0F);
+            int i = FastMath.round(MathHelper.sqrt(d0 * d0 + d1 * d1 + d2 * d2) * 100.0F);
 
             if (i > 0) {
                 if (this.vehicle instanceof EntityMinecartAbstract) {
@@ -1454,7 +1455,7 @@ public abstract class EntityHuman extends EntityLiving {
     public void e(float f, float f1) {
         if (!this.abilities.canFly) {
             if (f >= 2.0F) {
-                this.a(StatisticList.m, (int) Math.round((double) f * 100.0D));
+                this.a(StatisticList.m, (int) FastMath.round((double) f * 100.0D));
             }
 
             super.e(f, f1);

@@ -1,5 +1,7 @@
 package net.minecraft.server;
 
+import net.jafama.FastMath;
+
 import java.util.Random;
 
 public class BlockDaylightDetector extends BlockContainer {
@@ -34,7 +36,7 @@ public class BlockDaylightDetector extends BlockContainer {
             float f1 = f < 3.1415927F ? 0.0F : 6.2831855F;
 
             f += (f1 - f) * 0.2F;
-            i = Math.round((float) i * MathHelper.cos(f));
+            i = FastMath.round((float) i * MathHelper.cos(f));
             i = MathHelper.clamp(i, 0, 15);
             if (this.b) {
                 i = 15 - i;

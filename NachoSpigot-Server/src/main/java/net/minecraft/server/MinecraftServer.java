@@ -35,6 +35,7 @@ import java.util.concurrent.FutureTask;
 import javax.imageio.ImageIO;
 
 import io.netty.util.ResourceLeakDetector;
+import net.jafama.FastMath;
 import org.apache.commons.lang3.Validate;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -515,7 +516,11 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
     public final RollingAverage tps5 = new RollingAverage(60 * 5);
     public final RollingAverage tps15 = new RollingAverage(60 * 15);
     public double[] recentTps = new double[ 3 ]; // PaperSpigot - Fine have your darn compat with bad plugins
-
+    public double lastTps = 0.00D;
+    public ArrayList<Double> recentTpsOverTime = new ArrayList<>();
+    public int averagePlayerCount = 0;
+    public int maximumPlayerCount = 0;
+    public Date maximumPlayerCountDate = new Date();
     public static class RollingAverage {
         private final int size;
         private long time;
@@ -577,7 +582,7 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
                     if (wait > 0) {
                         // TacoSpigot start - fix the tick loop improvements
                         if (catchupTime < 2E6) {
-                            wait += Math.abs(catchupTime);
+                            wait += FastMath.abs(catchupTime);
                         } else if (wait < catchupTime) {
                             catchupTime -= wait;
                             wait = 0;
@@ -593,21 +598,34 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
                         wait = TICK_TIME - (curTime - lastTick);
                     }
 
-                    catchupTime = Math.min(MAX_CATCHUP_BUFFER, catchupTime - wait);
+                    catchupTime = FastMath.min(MAX_CATCHUP_BUFFER, catchupTime - wait);
 
                     if ( ++MinecraftServer.currentTick % SAMPLE_INTERVAL == 0 )
                     {
                         final long diff = curTime - tickSection;
-                        double currentTps = 1E9 / diff * SAMPLE_INTERVAL;
-                        tps1.add(currentTps, diff);
-                        tps5.add(currentTps, diff);
-                        tps15.add(currentTps, diff);
+                        lastTps = 1E9 / diff * SAMPLE_INTERVAL;
+                        tps1.add(lastTps, diff);
+                        tps5.add(lastTps, diff);
+                        tps15.add(lastTps, diff);
                         // Backwards compat with bad plugins
                         recentTps[0] = tps1.getAverage();
                         recentTps[1] = tps5.getAverage();
                         recentTps[2] = tps15.getAverage();
                         tickSection = curTime;
                         // PaperSpigot end
+
+                        // CastelysSpigot start
+                        recentTpsOverTime.add(lastTps);
+                        if (recentTpsOverTime.size() > 600)
+                            recentTpsOverTime.remove(0);
+
+                        int currentPlayerCount = MinecraftServer.getServer().getPlayerList().getPlayerCount();
+                        if (currentPlayerCount > maximumPlayerCount) {
+                            maximumPlayerCount = currentPlayerCount;
+                            maximumPlayerCountDate = new Date();
+                        }
+                        averagePlayerCount = (averagePlayerCount + currentPlayerCount) / 2;
+                        // CastelysSpigot end
                     }
                     lastTick = curTime;
 
@@ -718,7 +736,7 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
         if (i - this.X >= 5000000000L) {
             this.X = i;
             this.r.setPlayerSample(new ServerPing.ServerPingPlayerSample(this.J(), this.I()));
-            GameProfile[] agameprofile = new GameProfile[Math.min(this.I(), 12)];
+            GameProfile[] agameprofile = new GameProfile[FastMath.min(this.I(), 12)];
             int j = MathHelper.nextInt(this.s, 0, this.I() - agameprofile.length);
 
             for (int k = 0; k < agameprofile.length; ++k) {

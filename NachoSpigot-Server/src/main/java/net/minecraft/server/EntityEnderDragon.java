@@ -7,6 +7,7 @@ import java.util.List;
 
 // CraftBukkit start
 import dev.cobblesword.nachospigot.commons.Constants;
+import net.jafama.FastMath;
 import org.bukkit.block.BlockState;
 import org.bukkit.craftbukkit.event.CraftEventFactory;
 import org.bukkit.craftbukkit.util.BlockStateListPopulator;
@@ -104,7 +105,7 @@ public class EntityEnderDragon extends EntityInsentient implements IComplex, IMo
         } else {
             this.n();
             f = 0.2F / (MathHelper.sqrt(this.motX * this.motX + this.motZ * this.motZ) * 10.0F + 1.0F);
-            f *= (float) Math.pow(2.0D, this.motY);
+            f *= (float) FastMath.pow(2.0D, this.motY);
             if (this.bx) {
                 this.bv += f * 0.5F;
             } else {
@@ -158,7 +159,7 @@ public class EntityEnderDragon extends EntityInsentient implements IComplex, IMo
                         this.c = this.target.locZ;
                         double d5 = this.a - this.locX;
                         double d6 = this.c - this.locZ;
-                        double d7 = Math.sqrt(d5 * d5 + d6 * d6);
+                        double d7 = FastMath.sqrt(d5 * d5 + d6 * d6);
 
                         d4 = 0.4000000059604645D + d7 / 80.0D - 1.0D;
                         if (d4 > 10.0D) {
@@ -203,7 +204,7 @@ public class EntityEnderDragon extends EntityInsentient implements IComplex, IMo
 
                     this.bb *= 0.8F;
                     float f5 = MathHelper.sqrt(this.motX * this.motX + this.motZ * this.motZ) * 1.0F + 1.0F;
-                    double d10 = Math.sqrt(this.motX * this.motX + this.motZ * this.motZ) * 1.0D + 1.0D;
+                    double d10 = FastMath.sqrt(this.motX * this.motX + this.motZ * this.motZ) * 1.0D + 1.0D;
 
                     if (d10 > 40.0D) {
                         d10 = 40.0D;
@@ -581,7 +582,7 @@ public class EntityEnderDragon extends EntityInsentient implements IComplex, IMo
                     double distanceSquared = deltaX * deltaX + deltaZ * deltaZ;
                     if ( world.spigotConfig.dragonDeathSoundRadius > 0 && distanceSquared > world.spigotConfig.dragonDeathSoundRadius * world.spigotConfig.dragonDeathSoundRadius ) continue; // Spigot
                     if (distanceSquared > viewDistance * viewDistance) {
-                        double deltaLength = Math.sqrt(distanceSquared);
+                        double deltaLength = FastMath.sqrt(distanceSquared);
                         double relativeX = player.locX + (deltaX / deltaLength) * viewDistance;
                         double relativeZ = player.locZ + (deltaZ / deltaLength) * viewDistance;
                         player.playerConnection.sendPacket(new PacketPlayOutWorldEvent(1018, new BlockPosition((int) relativeX, (int) this.locY, (int) relativeZ), 0, true));

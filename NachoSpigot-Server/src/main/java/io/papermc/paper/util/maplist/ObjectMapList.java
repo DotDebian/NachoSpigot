@@ -4,6 +4,7 @@ import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;
 import it.unimi.dsi.fastutil.objects.AbstractReferenceList;
 import it.unimi.dsi.fastutil.objects.ObjectListIterator;
 import it.unimi.dsi.fastutil.objects.ObjectSpliterator;
+import net.jafama.FastMath;
 
 import java.util.Arrays;
 import java.util.NoSuchElementException;
@@ -77,7 +78,7 @@ public final class ObjectMapList<T> extends AbstractReferenceList<T> implements 
         T[] list = this.elements;
         if (list.length == count) {
             // resize required
-            list = this.elements = Arrays.copyOf(list, (int)Math.max(4L, (long) count << 1)); // overflow results in negative
+            list = this.elements = Arrays.copyOf(list, (int) FastMath.max(4L, (long) count << 1)); // overflow results in negative
         }
 
         list[count] = object;
@@ -97,7 +98,7 @@ public final class ObjectMapList<T> extends AbstractReferenceList<T> implements 
         T[] list = this.elements;
         if (list.length == count) {
             // resize required
-            list = this.elements = Arrays.copyOf(list, (int) Math.max(4L, (long) count << 1)); // overflow results in negative
+            list = this.elements = Arrays.copyOf(list, (int) FastMath.max(4L, (long) count << 1)); // overflow results in negative
         }
 
         System.arraycopy(list, index, list, index + 1, count - index);

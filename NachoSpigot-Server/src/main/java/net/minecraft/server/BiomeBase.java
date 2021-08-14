@@ -6,6 +6,7 @@ import com.google.common.collect.Sets;
 
 import java.util.*;
 
+import net.jafama.FastMath;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -325,7 +326,7 @@ public abstract class BiomeBase {
                         --l;
                         chunksnapshot.a(k1, l1, j1, iblockdata1);
                         if (l == 0 && iblockdata1.getBlock() == Blocks.SAND) {
-                            l = random.nextInt(4) + Math.max(0, l1 - 63);
+                            l = random.nextInt(4) + FastMath.max(0, l1 - 63);
                             iblockdata1 = iblockdata1.get(BlockSand.VARIANT) == BlockSand.EnumSandVariant.RED_SAND ? Blocks.RED_SANDSTONE.getBlockData() : Blocks.SANDSTONE.getBlockData();
                         }
                     }

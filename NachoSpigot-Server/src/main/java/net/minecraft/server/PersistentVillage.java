@@ -1,6 +1,8 @@
 package net.minecraft.server;
 
 import com.google.common.collect.Lists;
+import net.jafama.FastMath;
+
 import java.util.Iterator;
 import java.util.List;
 
@@ -163,7 +165,7 @@ public class PersistentVillage extends PersistentBase {
             }
 
             var3 = (VillageDoor)var2.next();
-        } while(var3.d().getX() != var1.getX() || var3.d().getZ() != var1.getZ() || Math.abs(var3.d().getY() - var1.getY()) > 1);
+        } while(var3.d().getX() != var1.getX() || var3.d().getZ() != var1.getZ() || FastMath.abs(var3.d().getY() - var1.getY()) > 1);
 
         return var3;
     }

@@ -12,6 +12,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
+import net.jafama.FastMath;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -90,7 +91,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
         BlockPosition blockposition = worldserver.getSpawn();
 
         if (!worldserver.worldProvider.o() && worldserver.getWorldData().getGameType() != WorldSettings.EnumGamemode.ADVENTURE) {
-            int i = Math.max(5, minecraftserver.getSpawnProtection() - 6);
+            int i = FastMath.max(5, minecraftserver.getSpawnProtection() - 6);
             int j = MathHelper.floor(worldserver.getWorldBorder().b((double) blockposition.getX(), (double) blockposition.getZ()));
 
             if (j < i) {
@@ -220,7 +221,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
 
         while (!this.removeQueue.isEmpty())
         {
-            int i = Math.min(this.removeQueue.size(), Integer.MAX_VALUE);
+            int i = FastMath.min(this.removeQueue.size(), Integer.MAX_VALUE);
             int[] aint = new int[i];
             Iterator<Integer> iterator = this.removeQueue.iterator();
             int j = 0;

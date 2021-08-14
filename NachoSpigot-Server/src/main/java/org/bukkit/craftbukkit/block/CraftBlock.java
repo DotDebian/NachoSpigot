@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import net.jafama.FastMath;
 import net.minecraft.server.*;
 
 import org.bukkit.Chunk;
@@ -364,7 +365,7 @@ public class CraftBlock implements Block {
 
         Block relative = getRelative(face);
         if (relative.getType() == Material.REDSTONE_WIRE) {
-            return Math.max(power, relative.getData()) > 0;
+            return FastMath.max(power, relative.getData()) > 0;
         }
 
         return power > 0;

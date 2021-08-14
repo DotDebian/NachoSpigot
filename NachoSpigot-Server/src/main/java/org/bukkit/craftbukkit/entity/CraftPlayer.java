@@ -15,6 +15,8 @@ import java.net.SocketAddress;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import net.jafama.FastMath;
 import net.md_5.bungee.api.chat.BaseComponent;
 
 import net.minecraft.server.*;
@@ -357,7 +359,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
                 break;
         }
 
-        float f = (float) Math.pow(2.0D, (note - 12.0D) / 12.0D);
+        float f = (float) FastMath.pow(2.0D, (note - 12.0D) / 12.0D);
         getHandle().playerConnection.sendPacket(new PacketPlayOutNamedSoundEffect("note."+instrumentName, loc.getBlockX(), loc.getBlockY(), loc.getBlockZ(), 3.0f, f));
     }
 
@@ -383,7 +385,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
                 instrumentName = "bassattack";
                 break;
         }
-        float f = (float) Math.pow(2.0D, (note.getId() - 12.0D) / 12.0D);
+        float f = (float) FastMath.pow(2.0D, (note.getId() - 12.0D) / 12.0D);
         getHandle().playerConnection.sendPacket(new PacketPlayOutNamedSoundEffect("note."+instrumentName, loc.getBlockX(), loc.getBlockY(), loc.getBlockZ(), 3.0f, f));
     }
 
@@ -1261,7 +1263,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
     @Override
     public int getNoDamageTicks() {
         if (getHandle().invulnerableTicks > 0) {
-            return Math.max(getHandle().invulnerableTicks, getHandle().noDamageTicks);
+            return FastMath.max(getHandle().invulnerableTicks, getHandle().noDamageTicks);
         } else {
             return getHandle().noDamageTicks;
         }
@@ -1271,7 +1273,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
     public void setFlySpeed(float value) {
         validateSpeed(value);
         EntityPlayer player = getHandle();
-        player.abilities.flySpeed = Math.max( value, 0.0001f ) / 2f; // Spigot
+        player.abilities.flySpeed = FastMath.max( value, 0.0001f ) / 2f; // Spigot
         player.updateAbilities();
 
     }
@@ -1280,7 +1282,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
     public void setWalkSpeed(float value) {
         validateSpeed(value);
         EntityPlayer player = getHandle();
-        player.abilities.walkSpeed = Math.max( value, 0.0001f ) / 2f; // Spigot
+        player.abilities.walkSpeed = FastMath.max( value, 0.0001f ) / 2f; // Spigot
         player.updateAbilities();
     }
 
@@ -1309,7 +1311,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
     @Override
     public void setMaxHealth(double amount) {
         super.setMaxHealth(amount);
-        this.health = Math.min(this.health, health);
+        this.health = FastMath.min(this.health, health);
         getHandle().triggerHealthUpdate();
     }
 

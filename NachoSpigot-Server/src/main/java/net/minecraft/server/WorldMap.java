@@ -8,6 +8,7 @@ import java.util.*;
 
 // CraftBukkit start
 
+import net.jafama.FastMath;
 import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.craftbukkit.CraftWorld;
@@ -210,7 +211,7 @@ public class WorldMap extends PersistentBase {
                 b3 = (byte) (k * k * 34187121 + k * 121 >> 15 & 15);
             }
         } else {
-            if (Math.abs(f) >= 320.0F || Math.abs(f1) >= 320.0F) {
+            if (FastMath.abs(f) >= 320.0F || FastMath.abs(f1) >= 320.0F) {
                 this.decorations.remove(s);
                 return;
             }
@@ -324,10 +325,10 @@ public class WorldMap extends PersistentBase {
 
         public void a(int i, int j) {
             if (this.d) {
-                this.e = Math.min(this.e, i);
-                this.f = Math.min(this.f, j);
-                this.g = Math.max(this.g, i);
-                this.h = Math.max(this.h, j);
+                this.e = FastMath.min(this.e, i);
+                this.f = FastMath.min(this.f, j);
+                this.g = FastMath.max(this.g, i);
+                this.h = FastMath.max(this.h, j);
             } else {
                 this.d = true;
                 this.e = i;

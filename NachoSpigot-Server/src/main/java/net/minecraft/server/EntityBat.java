@@ -1,5 +1,7 @@
 package net.minecraft.server;
 
+import net.jafama.FastMath;
+
 import java.util.Calendar;
 
 public class EntityBat extends EntityAmbient {
@@ -106,9 +108,9 @@ public class EntityBat extends EntityAmbient {
             double var3 = (double)this.a.getX() + 0.5D - this.locX;
             double var5 = (double)this.a.getY() + 0.1D - this.locY;
             double var7 = (double)this.a.getZ() + 0.5D - this.locZ;
-            this.motX += (Math.signum(var3) * 0.5D - this.motX) * 0.10000000149011612D;
-            this.motY += (Math.signum(var5) * 0.699999988079071D - this.motY) * 0.10000000149011612D;
-            this.motZ += (Math.signum(var7) * 0.5D - this.motZ) * 0.10000000149011612D;
+            this.motX += (FastMath.signum(var3) * 0.5D - this.motX) * 0.10000000149011612D;
+            this.motY += (FastMath.signum(var5) * 0.699999988079071D - this.motY) * 0.10000000149011612D;
+            this.motZ += (FastMath.signum(var7) * 0.5D - this.motZ) * 0.10000000149011612D;
             float var9 = (float)(MathHelper.b(this.motZ, this.motX) * 180.0D / 3.1415927410125732D) - 90.0F;
             float var10 = MathHelper.g(var9 - this.yaw);
             this.ba = 0.5F;

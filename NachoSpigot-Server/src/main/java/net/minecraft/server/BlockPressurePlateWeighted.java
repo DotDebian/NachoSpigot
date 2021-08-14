@@ -1,5 +1,6 @@
 package net.minecraft.server;
 
+import net.jafama.FastMath;
 import org.bukkit.event.entity.EntityInteractEvent; // CraftBukkit
 
 public class BlockPressurePlateWeighted extends BlockPressurePlateAbstract {
@@ -19,7 +20,7 @@ public class BlockPressurePlateWeighted extends BlockPressurePlateAbstract {
 
     protected int f(World world, BlockPosition blockposition) {
         // CraftBukkit start
-        //int i = Math.min(world.a(Entity.class, this.a(blockposition)).size(), this.b);
+        //int i = FastMath.min(world.a(Entity.class, this.a(blockposition)).size(), this.b);
         int i = 0;
         java.util.Iterator iterator = world.a(Entity.class, this.getBoundingBox(blockposition)).iterator();
 
@@ -41,11 +42,11 @@ public class BlockPressurePlateWeighted extends BlockPressurePlateAbstract {
             }
         }
 
-        i = Math.min(i, this.weight);
+        i = FastMath.min(i, this.weight);
         // CraftBukkit end
 
         if (i > 0) {
-            float f = (float) Math.min(this.weight, i) / (float) this.weight;
+            float f = (float) FastMath.min(this.weight, i) / (float) this.weight;
 
             return MathHelper.f(f * 15.0F);
         } else {

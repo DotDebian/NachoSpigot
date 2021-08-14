@@ -1,5 +1,7 @@
 package net.minecraft.server;
 
+import net.jafama.FastMath;
+
 import java.util.Random;
 import java.util.UUID;
 
@@ -20,11 +22,11 @@ public class MathHelper {
     }
 
     public static float c(float var0) {
-        return (float)Math.sqrt(var0);
+        return (float) FastMath.sqrt(var0);
     }
 
     public static float sqrt(double var0) {
-        return (float) Math.sqrt(var0);
+        return (float) FastMath.sqrt(var0);
     }
 
     public static int d(float var0) {
@@ -64,7 +66,7 @@ public class MathHelper {
         if (var0 < var1) {
             return var1;
         } else {
-            return Math.min(var0, var2);
+            return FastMath.min(var0, var2);
         }
     }
 
@@ -72,7 +74,7 @@ public class MathHelper {
         if (var0 < var1) {
             return var1;
         } else {
-            return Math.min(var0, var2);
+            return FastMath.min(var0, var2);
         }
     }
 
@@ -80,7 +82,7 @@ public class MathHelper {
         if (var0 < var2) {
             return var2;
         } else {
-            return Math.min(var0, var4);
+            return FastMath.min(var0, var4);
         }
     }
 
@@ -101,7 +103,7 @@ public class MathHelper {
             var2 = -var2;
         }
 
-        return Math.max(var0, var2);
+        return FastMath.max(var0, var2);
     }
 
     public static int nextInt(Random var0, int var1, int var2) {
@@ -161,7 +163,7 @@ public class MathHelper {
     }
 
     public static int a(String var0, int var1, int var2) {
-        return Math.max(var2, a(var0, var1));
+        return FastMath.max(var2, a(var0, var1));
     }
 
     public static double a(String var0, double var1) {
@@ -173,7 +175,7 @@ public class MathHelper {
     }
 
     public static double a(String var0, double var1, double var3) {
-        return Math.max(var3, a(var0, var1));
+        return FastMath.max(var3, a(var0, var1));
     }
 
     public static int b(int var0) {
@@ -286,7 +288,7 @@ public class MathHelper {
     static {
         int var0;
         for(var0 = 0; var0 < 65536; ++var0) {
-            b[var0] = (float)Math.sin((double)var0 * 3.141592653589793D * 2.0D / 65536.0D);
+            b[var0] = (float)FastMath.sin((double)var0 * 3.141592653589793D * 2.0D / 65536.0D);
         }
 
         c = new int[]{0, 1, 28, 2, 29, 14, 24, 3, 30, 22, 20, 15, 25, 17, 4, 8, 31, 27, 13, 23, 21, 19, 16, 7, 26, 12, 18, 6, 11, 5, 10, 9};
@@ -296,8 +298,8 @@ public class MathHelper {
 
         for(var0 = 0; var0 < 257; ++var0) {
             double var1 = (double)var0 / 256.0D;
-            double var3 = Math.asin(var1);
-            f[var0] = Math.cos(var3);
+            double var3 = FastMath.asin(var1);
+            f[var0] = FastMath.cos(var3);
             e[var0] = var3;
         }
 

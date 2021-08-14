@@ -22,6 +22,7 @@ import javax.imageio.ImageIO;
 import com.eatthepath.uuid.FastUUID;
 import dev.cobblesword.nachospigot.Nacho;
 import dev.cobblesword.nachospigot.knockback.Knockback;
+import net.jafama.FastMath;
 import org.bukkit.craftbukkit.inventory.*;
 import xyz.sculas.nacho.malware.AntiMalware;
 import xyz.sculas.nacho.patches.RuntimePatches;
@@ -428,7 +429,7 @@ public final class CraftServer implements Server {
         int delta = Integer.MAX_VALUE;
         for (Player player : getOnlinePlayers()) {
             if (player.getName().toLowerCase().startsWith(lowerName)) {
-                int curDelta = Math.abs(player.getName().length() - lowerName.length());
+                int curDelta = FastMath.abs(player.getName().length() - lowerName.length());
                 if (curDelta < delta) {
                     found = player;
                     delta = curDelta;
@@ -1881,6 +1882,14 @@ public final class CraftServer implements Server {
                     MinecraftServer.getServer().tps5.getAverage(),
                     MinecraftServer.getServer().tps15.getAverage()
             };
+        }
+        // PaperSpigot end
+
+        // PaperSpigot start - Add getTPS (Further improve tick loop)
+        @Override
+        public List<Double> getTPSOverTime(int secondsDuration) {
+            return MinecraftServer.getServer().recentTpsOverTime
+                    .subList(FastMath.max(MinecraftServer.getServer().recentTpsOverTime.size() - secondsDuration, 0), MinecraftServer.getServer().recentTpsOverTime.size());
         }
         // PaperSpigot end
 

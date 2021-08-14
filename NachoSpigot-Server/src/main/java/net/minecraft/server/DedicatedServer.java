@@ -11,6 +11,7 @@ import java.util.concurrent.TimeUnit;
 import dev.cobblesword.nachospigot.Nacho;
 import dev.cobblesword.nachospigot.commons.IPUtils;
 import dev.cobblesword.nachospigot.knockback.Knockback;
+import net.jafama.FastMath;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -211,7 +212,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
                 if (org.spigotmc.SpigotConfig.bungee) {
                     DedicatedServer.LOGGER.warn("Whilst this makes it possible to use BungeeCord, unless access to your server is properly restricted, it also opens up the ability for hackers to connect with any username they choose.");
                     DedicatedServer.LOGGER.warn("Please see http://www.spigotmc.org/wiki/firewall-guide/ for further information.");
-                    if (!Nacho.get().getConfig().stopNotifyBungee) {
+                    /*if (!Nacho.get().getConfig().stopNotifyBungee) {
                         DedicatedServer.LOGGER.warn("---------------------------- NachoSpigot Checker ----------------------------");
                         DedicatedServer.LOGGER.warn("If you don't want to see this message anymore, set \"stopNotifyBungee\" to \"true\" in \"nacho.json\"!");
                         DedicatedServer.LOGGER.warn("Checking firewall..");
@@ -234,6 +235,8 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
                             e.printStackTrace();
                         }
                         DedicatedServer.LOGGER.warn("---------------------------- NachoSpigot Checker ----------------------------");
+
+                     */
                     }
                 } else {
                     DedicatedServer.LOGGER.warn("While this makes the game possible to play without internet access, it also opens up the ability for hackers to connect with any username they choose.");
@@ -530,7 +533,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
             BlockPosition blockposition1 = world.getSpawn();
             int i = MathHelper.a(blockposition.getX() - blockposition1.getX());
             int j = MathHelper.a(blockposition.getZ() - blockposition1.getZ());
-            int k = Math.max(i, j);
+            int k = FastMath.max(i, j);
 
             return k <= this.getSpawnProtection();
         }

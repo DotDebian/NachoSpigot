@@ -6,6 +6,7 @@ import io.netty.channel.ChannelFutureListener;
 import java.net.InetSocketAddress;
 import java.util.Iterator;
 
+import net.jafama.FastMath;
 import org.bukkit.craftbukkit.util.CraftIconCache;
 import org.bukkit.entity.Player;
 
@@ -112,7 +113,7 @@ public class PacketStatusListener implements PacketStatusInListener {
         if ( !profiles.isEmpty() )
         {
             java.util.Collections.shuffle( profiles ); // This sucks, its inefficient but we have no simple way of doing it differently
-            profiles = profiles.subList( 0, Math.min( profiles.size(), org.spigotmc.SpigotConfig.playerSample ) ); // Cap the sample to n (or less) displayed players, ie: Vanilla behaviour
+            profiles = profiles.subList( 0, FastMath.min( profiles.size(), org.spigotmc.SpigotConfig.playerSample ) ); // Cap the sample to n (or less) displayed players, ie: Vanilla behaviour
         }
         // Spigot End
         playerSample.a(profiles.toArray(new GameProfile[profiles.size()]));

@@ -8,6 +8,7 @@ import java.util.Set;
 
 // CraftBukkit start
 import it.unimi.dsi.fastutil.objects.ObjectIterator;
+import net.jafama.FastMath;
 import org.bukkit.craftbukkit.util.LongHash;
 import org.bukkit.craftbukkit.util.LongHashSet;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
@@ -15,7 +16,7 @@ import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 
 public final class SpawnerCreature {
 
-    private static final int a = (int) Math.pow(17.0D, 2.0D);
+    private static final int a = (int) FastMath.pow(17.0D, 2.0D);
     private final LongHashSet b = new LongHashSet(); // CraftBukkit
 
     public SpawnerCreature() {}

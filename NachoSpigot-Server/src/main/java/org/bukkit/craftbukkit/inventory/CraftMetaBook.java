@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import net.jafama.FastMath;
 import net.minecraft.server.NBTTagCompound;
 import net.minecraft.server.NBTTagList;
 
@@ -84,7 +85,7 @@ public class CraftMetaBook extends CraftMetaItem implements BookMeta {
         if (tag.hasKey(BOOK_PAGES.NBT) && handlePages) {
             NBTTagList pages = tag.getList(BOOK_PAGES.NBT, 8);
             // FlamePaper - Apply page limit
-            for (int i = 0; i < Math.min(pages.size(), MAX_PAGES); i++) {
+            for (int i = 0; i < FastMath.min(pages.size(), MAX_PAGES); i++) {
                 String page = pages.getString(i);
                 if (resolved) {
                     try {
@@ -202,7 +203,7 @@ public class CraftMetaBook extends CraftMetaItem implements BookMeta {
             this.title = null;
         } else {
             // FlamePaper - Simplify & improve title handling
-            this.title = title.substring(0, Math.min(title.length(), MAX_PAGE_LENGTH));
+            this.title = title.substring(0, FastMath.min(title.length(), MAX_PAGE_LENGTH));
         }
         // FlamePaper - Always return true
         return true;
@@ -227,7 +228,7 @@ public class CraftMetaBook extends CraftMetaItem implements BookMeta {
         }
 
         // FlamePaper - Simplify page handling
-        String newText = text == null ? "" : text.substring(0, Math.min(text.length(), MAX_PAGE_LENGTH));
+        String newText = text == null ? "" : text.substring(0, FastMath.min(text.length(), MAX_PAGE_LENGTH));
         pages.set(page - 1, CraftChatMessage.fromString(newText, true)[0]);
     }
 
@@ -239,7 +240,7 @@ public class CraftMetaBook extends CraftMetaItem implements BookMeta {
 
     public void addPage(final String... pages) {
         // FlamePaper - Limit page iterations
-        for (int i = 0; i < Math.min(pages.length, MAX_PAGES); i++) {
+        for (int i = 0; i < FastMath.min(pages.length, MAX_PAGES); i++) {
             // FlamePaper - Apply page limit
             if (getPageCount() < MAX_PAGES) {
                 String page = pages[i];

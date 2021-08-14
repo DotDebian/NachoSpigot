@@ -2,6 +2,7 @@ package net.minecraft.server;
 
 import java.util.*;
 
+import net.jafama.FastMath;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -128,8 +129,8 @@ public class EntityTrackerEntry {
                 int k1 = j - this.yLoc;
                 int l1 = k - this.zLoc;
                 Object object = null;
-                boolean flag = Math.abs(j1) >= 4 || Math.abs(k1) >= 4 || Math.abs(l1) >= 4 || this.tickCount % 60 == 0;
-                boolean flag1 = Math.abs(l - this.yRot) >= 4 || Math.abs(i1 - this.xRot) >= 4;
+                boolean flag = FastMath.abs(j1) >= 4 || FastMath.abs(k1) >= 4 || FastMath.abs(l1) >= 4 || this.tickCount % 60 == 0;
+                boolean flag1 = FastMath.abs(l - this.yRot) >= 4 || FastMath.abs(i1 - this.xRot) >= 4;
 
                 if (this.tickCount > 0 || this.tracker instanceof EntityArrow) { // PaperSpigot - Moved up
                     // CraftBukkit start - Code moved from below
@@ -224,7 +225,7 @@ public class EntityTrackerEntry {
             } else {
                 i = MathHelper.d(this.tracker.yaw * 256.0F / 360.0F);
                 j = MathHelper.d(this.tracker.pitch * 256.0F / 360.0F);
-                boolean flag2 = Math.abs(i - this.yRot) >= 4 || Math.abs(j - this.xRot) >= 4;
+                boolean flag2 = FastMath.abs(i - this.yRot) >= 4 || FastMath.abs(j - this.xRot) >= 4;
 
                 if (flag2) {
                     this.broadcast(new PacketPlayOutEntity.PacketPlayOutEntityLook(this.tracker.getId(), (byte) i, (byte) j, this.tracker.onGround));
@@ -240,7 +241,7 @@ public class EntityTrackerEntry {
             }
 
             i = MathHelper.d(this.tracker.getHeadRotation() * 256.0F / 360.0F);
-            if (Math.abs(i - this.lastHeadYaw) >= 4) {
+            if (FastMath.abs(i - this.lastHeadYaw) >= 4) {
                 this.broadcast(new PacketPlayOutEntityHeadRotation(this.tracker, (byte) i));
                 this.lastHeadYaw = i;
             }
