@@ -42,6 +42,8 @@ public abstract class EntityInsentient extends EntityLiving {
     private boolean shouldBreakLeash = true; // Nacho
     private boolean pullWhileLeashed = true; // Nacho
 
+    private boolean needAI = true; // Castelys
+
     public EntityInsentient(World world) {
         super(world);
         this.goalSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
@@ -60,6 +62,9 @@ public abstract class EntityInsentient extends EntityLiving {
         // CraftBukkit start - default persistance to type's persistance value
         this.persistent = !isTypeNotPersistent();
         // CraftBukkit end
+
+        // Castelys
+        needAI = Nacho.get().getConfig().enableMobAI || (world != null && world.getWorld().getName().equalsIgnoreCase("dimension"));
     }
 
     protected void initAttributes() {
@@ -496,7 +501,7 @@ public abstract class EntityInsentient extends EntityLiving {
             return;
         }
         // Spigot End
-        if (Nacho.get().getConfig().enableMobAI) {
+        if (needAI) {
             this.world.methodProfiler.a("sensing");
             this.bk.a();
             this.world.methodProfiler.b();
