@@ -1,10 +1,13 @@
 package org.spigotmc;
 
+import dev.cobblesword.nachospigot.CC;
 import net.jafama.FastMath;
 import net.minecraft.server.MinecraftServer;
 import org.apache.commons.lang.time.DurationFormatUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Chunk;
+import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
@@ -14,6 +17,7 @@ import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 
 public class TicksPerSecondCommand extends Command
 {
@@ -59,6 +63,35 @@ public class TicksPerSecondCommand extends Command
         sender.sendMessage("§7§m---------§e Graphique TPS §7§m---------");
         getGraph(Bukkit.spigot().getTPSOverTime(30)).forEach(sender::sendMessage);
         sender.sendMessage("§7§m-------------------------------");
+
+        sender.sendMessage("§8");
+
+        sender.sendMessage("§7Informations sur les mondes:");
+
+        final List<World> worlds = Bukkit.getWorlds();
+        for (final World w : worlds) {
+            String worldType = "World";
+            switch (w.getEnvironment()) {
+                case NETHER:
+                    worldType = "Nether";
+                    break;
+                case THE_END:
+                    worldType = "The End";
+                    break;
+            }
+
+            int tileEntities = 0;
+
+            try {
+                for (final Chunk chunk : w.getLoadedChunks()) {
+                    tileEntities += chunk.getTileEntities().length;
+                }
+            } catch (final java.lang.ClassCastException ex) {
+                Bukkit.getLogger().log(Level.SEVERE, "Corrupted chunk data on world " + w, ex);
+            }
+
+            sender.sendMessage(" " + CC.strikeThrough + "  §7 " + worldType + " \"" + w.getName() + "\": §e" + w.getLoadedChunks().length + " §7chunks chargés, §e" + w.getEntities().size() + " §7entitées et §e" + tileEntities + " §7tiles.");
+        }
 
         return true;
     }
